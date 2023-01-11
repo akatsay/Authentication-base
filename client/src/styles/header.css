@@ -1,0 +1,13 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    color: var(--fourth);
+    align-items: center;
+    background-color: var(--primary); 
+    width: 100%;
+  }
+  
+  .brand-title {
+    font-size: 2rem;
+    margin: .5rem;
+  }

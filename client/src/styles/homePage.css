@@ -1,0 +1,11 @@
+.homepage-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+  .auth-action-btn:hover {
+    background-color: var(--fifth);
+  }
