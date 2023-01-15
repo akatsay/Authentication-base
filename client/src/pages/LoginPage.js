@@ -60,7 +60,7 @@ export const LoginPage = () => {
         e.preventDefault()
         try {
             const data = await request("api/auth/login", "post", {...form})
-            auth.login(data.token, data.userId)
+            auth.login(data.token, data.userId, data.name, data.email)
             toast.success(data.message, {
                 style: {backgroundColor: "#555", color: "white"},
                 position: "bottom-right",

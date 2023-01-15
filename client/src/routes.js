@@ -3,6 +3,7 @@ import {Routes, Route, Navigate} from "react-router-dom"
 import {LoginPage} from "./pages/LoginPage"
 import {RegisterPage} from "./pages/RegisterPage"
 import {HomePage} from "./pages/HomePage"
+import { AccountPage } from './pages/AccountPage'
 
 export const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
@@ -10,6 +11,7 @@ export const useRoutes = isAuthenticated => {
             <Routes>
                 <Route path="/home" exact element={<HomePage />} />
                 <Route path="/" exact element={<Navigate to="/home" />} />
+                <Route path="/account" exact element={<AccountPage/>} />
                 <Route path="*" element={<Navigate replace to="/" />}  />
             </Routes>
         )

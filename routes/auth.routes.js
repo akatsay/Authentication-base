@@ -61,7 +61,7 @@ router.post(
         res.status(201).json({ message: "User created" })
 
     } catch (e) {
-        res.status(500).json({ message: " something went wrong on the server " })
+        res.status(500).json({ message: " something went wrong on the server... " })
     }
 })
 
@@ -91,8 +91,6 @@ router.post(
 
         const user = await User.findOne({ email })
 
-        console.log(user)
-
         if(!user) {
             return res.status(400).json({ 
                 errors: {msg: "User with this email does not exist", param: "email"},
@@ -108,13 +106,14 @@ router.post(
                 message: "Incorrect password, try again" })
         }
 
+        console.log(user.firstName)
         const token = jwt.sign(
-            {userId: user.id},
+            {userId: user.id, name: user.firstName, email: user.email},
             process.env.JWT_SECRET,
             {expiresIn: "1h"}
         )
 
-        res.json({ token, userId: user.id, message: `logged in as ${email}` })
+        res.json({ token, userId: user.id, name: user.firstName, email: user.email, message: `logged in as ${email}` })
 
     } catch (e) {
         res.status(500).json({ message: "something went wrong on the server..." })

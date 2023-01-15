@@ -11,13 +11,13 @@ import { Header } from "./partials/header"
 
 function App() {
 
-  const {login, logout, token, userId} = useAuth()
+  const {login, logout, token, userId, userName, userEmail} = useAuth()
   const isAuthenticated = !!token
   const routes = useRoutes(isAuthenticated)
 
   return (
     <AuthContext.Provider value={{
-      login, logout, token, userId, isAuthenticated
+      login, logout, token, userId, userName, userEmail, isAuthenticated
     }}>
       <Router>
         <div className="container">
