@@ -25,3 +25,7 @@
 .pustishka {
     cursor: default;
 }
+
+.setting-wrapper.setting-wrapper-toggle-type {
+    justify-content: center;
+}

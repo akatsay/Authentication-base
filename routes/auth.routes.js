@@ -106,7 +106,6 @@ router.post(
                 message: "Incorrect password, try again" })
         }
 
-        console.log(user.firstName)
         const token = jwt.sign(
             {userId: user.id, name: user.firstName, email: user.email},
             process.env.JWT_SECRET,

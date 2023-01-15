@@ -4,6 +4,8 @@ import { AuthContext } from "../context/AuthContext"
 import { useNavigate } from 'react-router-dom'
 import { useHttp } from "../hooks/http.hook"
 
+import { Modal } from "../partials/modal"
+
 import "../styles/accountPage.css"
 
 export const AccountPage = () => {
@@ -18,6 +20,7 @@ export const AccountPage = () => {
     const [showChangePasswordMenu, setShowChangePasswordMenu] = useState(false)
     const [changeNameErrorMessageDetails, setChangeNameErrorMessageDetails] = useState({})
     const [changePasswordErrorMessageDetails, setChangePasswordErrorMessageDetails] = useState({})
+    const [openModal, setOpenModal] = useState(false);
 
     const [nameForm, setNameForm] = useState({
         name: "",
@@ -73,6 +76,26 @@ export const AccountPage = () => {
             newPasswordRef.current.style.borderBottomColor = ""
             setShowChangePasswordMenu(false)
             setPasswordForm({...passwordForm, oldPassword: "", newPassword: ""})
+            toast.success(data.message, {
+                style: {backgroundColor: "#555", color: "white"},
+                position: "bottom-right",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+                });
+        } catch (e) {
+            
+        }
+    }
+
+    const deleteAccountHandler = async () => {
+        try {
+            const data = await request("/api/account/delete", "delete", {userId : auth.userId})
             toast.success(data.message, {
                 style: {backgroundColor: "#555", color: "white"},
                 position: "bottom-right",
@@ -186,7 +209,7 @@ export const AccountPage = () => {
                         :
                         null
                     }
-                    <div className="setting-wrapper">
+                    <div className="setting-wrapper setting-wrapper-toggle-type">
                         <button 
                             onClick={() => 
                                 {
@@ -242,7 +265,20 @@ export const AccountPage = () => {
                         :
                         null
                     }
+                    <div className="setting-wrapper setting-wrapper-toggle-type">
+                        <button 
+                            // onClick={deleteAccountHandler}
+                            onClick={() => setOpenModal(true)}   
+                            className="delete-account-btn"
+                        >
+                            Delete My account
+                        </button>
+                    </div>
                 </div>
+                <Modal 
+                open={openModal} 
+                onClose={() => setOpenModal(false)}
+                />
             </div>
         </>
     )

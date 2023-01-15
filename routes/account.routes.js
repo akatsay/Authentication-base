@@ -130,4 +130,53 @@ router.post(
     }
 })
 
+// /api/account/delete
+
+router.post(
+    "/delete",
+    [
+        check("password")
+            .not().isEmpty().withMessage("Input your old Password")
+    ],
+    async (req, res) => {
+    
+        try {
+
+            const errors = validationResult(req)
+
+            if (!errors.isEmpty()) {
+                return res.status(400).json({
+                    errors: errors.array()[0],
+                    message: "Incorrect password"
+                })
+            }
+
+            const {password ,userId} = req.body
+
+            const user = await User.findById(userId)
+
+            if(!user) {
+                return res.status(500).json({ 
+                    errors: {msg: "Server error, unable to find user", param: "userId"},
+                    message:  "Server error, unable to delete account"
+                })
+            }
+
+            const isMatch = await bcrypt.compare(password, user.password)
+
+            if (!isMatch) {
+                return res.status(400).json({ 
+                    errors: {msg: "Incorrect password, try again", param: "password"},
+                    message: "Incorrect password, try again" })
+            }
+
+            await User.findByIdAndDelete(userId)
+
+            res.status(200).json({ message: "User deleted" })
+
+        } catch (e) {
+            res.status(500).json({ message: " something went wrong on the server... " })
+        }
+})
+
 module.exports = router
