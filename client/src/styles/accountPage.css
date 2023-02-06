@@ -72,7 +72,6 @@
 .change-btn:hover, .submit-button:hover {
     background-color: var(--fifth);
   }
-  
 
 .change-menu {
     height: 0;
@@ -86,30 +85,35 @@
 }
 
 .change-menu.name.show {
-    animation: animateChangeMenuNameShow 0.5s ease-in-out forwards;
+    transition: height 0.3s linear;
+    height: 100px;
 }
 
 .change-menu.name.hide {
-    animation: animateChangeMenuNameHide 0.5s ease-in-out forwards;
+    transition: height 0.3s 0.2s linear;
+    height: 0px;
 }
 
 .change-menu.password.show {
-    animation: animateChangeMenuPasswordShow 0.5s ease-in-out forwards;
+    transition: height 0.3s linear;
+    height: 220px;
 }
 
 .change-menu.password.hide {
-    animation: animateChangeMenuPasswordHide 0.5s ease-in-out forwards;
+    transition: height 0.3s 0.2s linear;
+    height: 0px;
 }
 
 .change-menu.show * {
     touch-action: auto;
     pointer-events: auto;
-    animation: animateChangeMenuChildrenShow 0.5s 0.3s linear forwards;
+    transition: opacity 0.2s 0.3s linear, height 0.2s;
+    opacity: 1;
 }
 
 .change-menu.hide * {
-
-    animation: animateChangeMenuChildrenHide 0.2s linear forwards;
+    transition: opacity 0.2s linear;
+    opacity: 0;
 }
 
 .error-details {
@@ -134,64 +138,4 @@
     font-size: 1.2rem;
     border-radius: 10px;
     border: none;
-  }
-
-  @keyframes animateChangeMenuChildrenShow {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-  }
-
-  @keyframes animateChangeMenuChildrenHide {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-  }
-
-  @keyframes animateChangeMenuNameShow {
-    from {
-        height: 0;
-    }
-    to {
-        height: 90px;
-    }
-  }
-
-  @keyframes animateChangeMenuNameHide {
-    from {
-        height: 90px;
-    }
-    to {
-        height: 0;
-    }
-  }
-
-  @keyframes animateChangeMenuPasswordShow {
-    from {
-        height: 0;
-    }
-    to {
-        height: 210px;
-    }
-  }
-
-  @keyframes animateChangeMenuPasswordHide {
-    from {
-        height: 210px;
-    }
-    to {
-        height: 0;
-    }
-  }
-
-  @keyframes rotateChevron{
-    to {
-        transform: rotate(180deg);
-    }
   }

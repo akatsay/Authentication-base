@@ -18,10 +18,6 @@ export const AccountPage = () => {
     const {loading, request, error, clearError} = useHttp()
     const [showChangeNameMenu, setShowChangeNameMenu] = useState(false)
     const [showChangePasswordMenu, setShowChangePasswordMenu] = useState(false)
-    
-    const [clickedNameChange, setClickedNameChange] = useState(false) //Flag to prevent animation when page loads
-    const [clickedPasswordChange, setClickedPasswordChange] = useState(false) //Flag to prevent animation when page loads
-
     const [changeNameErrorMessageDetails, setChangeNameErrorMessageDetails] = useState({})
     const [changePasswordErrorMessageDetails, setChangePasswordErrorMessageDetails] = useState({})
     const [openModal, setOpenModal] = useState(false);
@@ -38,9 +34,6 @@ export const AccountPage = () => {
     })
 
     const navigate = useNavigate()
-
-    const handleClickedNameChange = () => setClickedNameChange(true)
-    const handleClickedPasswordChange = () => setClickedPasswordChange(true)
 
     const NameChangeHandler = (event) => {
         setNameForm({...nameForm, [event.target.name]: event.target.value})
@@ -153,7 +146,6 @@ export const AccountPage = () => {
                         <button 
                             onClick={() => 
                                 {
-                                    handleClickedNameChange();
                                     setShowChangeNameMenu(!showChangeNameMenu);
                                     showChangeNameMenu ? setShowChangePasswordMenu(false) : setShowChangePasswordMenu(false);
                                     !showChangeNameMenu ? setChangeNameErrorMessageDetails({}) : setChangeNameErrorMessageDetails({});
@@ -167,9 +159,7 @@ export const AccountPage = () => {
                             {!showChangeNameMenu ? "Change" : "Cancel"} <i className="fa fa-chevron-down rc-accordion-icon"></i>
                         </button>
                     </div>
-                    {/* {showChangeNameMenu
-                        ? */}
-                        <div className={`change-menu name ${clickedNameChange ? (showChangeNameMenu ? "show" : "hide") : ""}`}>
+                        <div className={`change-menu name ${showChangeNameMenu ? "show" : "hide"}`}>
                             <input 
                                 ref={nameRef}
                                 className="input input-name"
@@ -198,14 +188,10 @@ export const AccountPage = () => {
                                 
                             }
                         </div>
-                        {/* :
-                        null
-                    } */}
                     <div className="setting-wrapper setting-wrapper-toggle-type">
                         <button 
                             onClick={() => 
                                 {
-                                    handleClickedPasswordChange();
                                     setShowChangePasswordMenu(!showChangePasswordMenu);
                                     showChangePasswordMenu ? setShowChangeNameMenu(false) : setShowChangeNameMenu(false);
                                     !showChangePasswordMenu ? setChangePasswordErrorMessageDetails({}) : setChangePasswordErrorMessageDetails({});
@@ -221,9 +207,7 @@ export const AccountPage = () => {
                             {!showChangePasswordMenu ? "Change Password" : "Cancel"} <i className="fa fa-chevron-down rc-accordion-icon"></i>
                         </button>
                     </div>
-                    {/* {showChangePasswordMenu
-                        ? */}
-                        <div className={`change-menu password ${clickedPasswordChange ? (showChangePasswordMenu ? "show" : "hide") : ""}`}>
+                        <div className={`change-menu password ${showChangePasswordMenu ? "show" : "hide"}`}>
                             <label className="input-label" htmlFor="oldPassword">Old password</label>
                             <input 
                                 ref={oldPasswordRef}
@@ -262,9 +246,6 @@ export const AccountPage = () => {
                                     </div>
                             }
                         </div>
-                        {/* :
-                        null
-                    } */}
                     <div className="setting-wrapper setting-wrapper-toggle-type">
                         <button 
                             onClick={() => setOpenModal(true)}   

@@ -53,7 +53,7 @@ export const Header = () => {
               </button>
               <ul className={`dropdown-menu ${open ? "show" : "hide"}`}>
                 <li className="menu-item">
-                  <button onClick={() => {navigate("/account")}} className="account-nav-btn">Account-settings</button>
+                  <button onClick={() => {navigate("/account"); handleOpen();}} className="account-nav-btn">Account-settings</button>
                 </li>
                 <li className="menu-item">
                   <button onClick={logoutHandler} className="logout-btn">Logout</button>
