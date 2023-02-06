@@ -14,6 +14,26 @@ export const HomePage = () => {
                 <h1 className="page-title">HomePage</h1>
                 <h2>Hello, {auth.userName} !</h2>
             </div>
+            <div className="homepage-container">
+                <h1 className="page-title">HomePage</h1>
+                <h2>Hello, {auth.userName} !</h2>
+            </div>
+            <div className="homepage-container">
+                <h1 className="page-title">HomePage</h1>
+                <h2>Hello, {auth.userName} !</h2>
+            </div>
+            <div className="homepage-container">
+                <h1 className="page-title">HomePage</h1>
+                <h2>Hello, {auth.userName} !</h2>
+            </div>
+            <div className="homepage-container">
+                <h1 className="page-title">HomePage</h1>
+                <h2>Hello, {auth.userName} !</h2>
+            </div>
+            <div className="homepage-container">
+                <h1 className="page-title">HomePage</h1>
+                <h2>Hello, {auth.userName} !</h2>
+            </div>
         </>
     )
 }

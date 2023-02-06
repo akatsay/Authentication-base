@@ -10,7 +10,7 @@ const router = Router()
 
 // /api/account/name
 
-router.post(
+router.put(
     "/name",
     [
         check("name")
@@ -39,15 +39,15 @@ router.post(
                 })
             }
 
-            const isMatch = await name === user.firstName
+            const formatedName = name.charAt(0).toUpperCase()+ name.slice(1).toLowerCase()
+            const isMatch = await formatedName === user.firstName
 
-            if (!isMatch) {
+            if (isMatch) {
                 return res.status(400).json({ 
                     errors: {msg: "New name should be different from old one", param: "name"},
                     message: "Invalid new name" })
             }
 
-            const formatedName = name.charAt(0).toUpperCase()+ name.slice(1).toLowerCase()
             const update = { firstName: formatedName };
             await user.updateOne(update);
 
@@ -132,7 +132,7 @@ router.post(
 
 // /api/account/delete
 
-router.post(
+router.delete(
     "/delete",
     [
         check("password")

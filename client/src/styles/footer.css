@@ -3,9 +3,7 @@
     align-items: center;
     justify-content: space-between;
     background-color: var(--primary);
-    bottom: 0;
     width: 100%;
-    height: 3rem;
   }
 
 .footer > * {
@@ -17,7 +15,17 @@
 }
 
 .author:hover {
-    color: var(--secondary);
+    color: white;
+}
+
+.smile {
+    display: inline-block;
+    margin: 0;
+    transition: transform 0.2s ease-in-out;
+}
+
+.author:hover .smile{
+    transform: scale(1.5); 
 }
 
 .fa-brands {

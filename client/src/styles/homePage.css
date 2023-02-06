@@ -5,7 +5,3 @@
     justify-content: center;
     align-items: center;
 }
-
-  .auth-action-btn:hover {
-    background-color: var(--fifth);
-  }

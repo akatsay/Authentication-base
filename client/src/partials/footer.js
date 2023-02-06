@@ -7,7 +7,7 @@ export const Footer = () => {
     return (
         <>
             <div className="footer">
-                <p className="author">Created by akatsay <span className="smile">🙃</span></p>
+                <div className="author">Created by akatsay <p className="smile">🙃</p></div>
                 <i 
                     className="fa-brands fa-github grow" 
                     onClick={() => {

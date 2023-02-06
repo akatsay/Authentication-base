@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect, useCallback } from "react"
+import React, { useContext, useRef, useState } from "react"
 import { toast, Slide } from "react-toastify"
 import { AuthContext } from "../context/AuthContext"
 import { useDetectOutsideClick } from "../hooks/useDetectOutsideClick";
@@ -9,12 +9,16 @@ import "../styles/header.css"
 export const Header = () => {
 
   const navigate = useNavigate()
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef(null)
+  
+  const [clicked, setClicked] = useState(false) //Flag to prevent animation when page
   const [open, setOpen] = useDetectOutsideClick(dropdownRef, false);
 
   const auth = useContext(AuthContext)
 
-  const handleOpen = () => setOpen(!open);
+  const handleClicked = () => setClicked(true)
+
+  const handleOpen = () => setOpen(!open)
 
   const logoutHandler = () => {
     auth.logout()
@@ -37,43 +41,25 @@ export const Header = () => {
     return (
       <nav className="navbar">
         <div className="brand-title">Authentication</div>
-          { auth.isAuthenticated
-            ?
-            <div ref={dropdownRef} className="dropdown">
-              <button className="drop-trigger" onClick={handleOpen}>
+            <div ref={dropdownRef} className={`dropdown ${auth.isAuthenticated ? "" : "hide"}`}>
+              <button className="drop-trigger big" onClick={() => {handleOpen(); handleClicked();}}>
                 <p>Logged in as:</p>
                 <i>{auth.userEmail}</i>
               </button>
-              {open ? (
-                <ul className="dropdown-menu">
-                  <li className="menu-item">
-                    <button onClick={() => {navigate("/account")}}>Account settings</button>
-                  </li>
-                  <li className="menu-item">
-                    <button onClick={logoutHandler} className="logout-btn">Logout</button>
-                  </li>
-                </ul>
-              ) : null}
+              <button className="drop-trigger small" onClick={handleOpen}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </button>
+              <ul className={`dropdown-menu ${open ? "show" : "hide"}`}>
+                <li className="menu-item">
+                  <button onClick={() => {navigate("/account")}} className="account-nav-btn">Account-settings</button>
+                </li>
+                <li className="menu-item">
+                  <button onClick={logoutHandler} className="logout-btn">Logout</button>
+                </li>
+              </ul>
         </div>
-            :
-            null
-          }
-
-
-        {/* <div className="dropdown">
-          {auth.isAuthenticated
-            ? 
-            <span className="drop-trigger">
-              <p>Logged in as:</p>
-              <i>{auth.userEmail}</i>
-            </span>
-            :
-            null
-          }
-          <div className="dropdown-menu">
-            <button onClick={logoutHandler} className="logout">Logout</button>
-          </div>
-        </div> */}
       </nav>
     )
 }

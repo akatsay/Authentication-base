@@ -36,7 +36,7 @@ export const Modal = ({ open, onClose }) => {
 
     const deleteAccountHandler = async () => {
         try {
-            const data = await request("/api/account/delete", "post", {...deletionForm})
+            const data = await request("/api/account/delete", "delete", {...deletionForm})
             passwordRef.current.style.borderBottomColor = ""
             auth.logout()
             toast.success(data.message, {
@@ -100,12 +100,15 @@ export const Modal = ({ open, onClose }) => {
                 <div className='form-container'>
                     <p>Account deletion is irreversible. All your data will be lost.</p>
                     <div className='inputs-container'>
-                        <label className='checkbox-label'>Are you sure?</label>
-                        <input 
-                            type="checkbox"
-                            onClick={handleEnablePasswordInput}
-                        />
-                        <label className='checkbox-label'>Yes</label>
+                        <label className='checkbox-label'>Are you sure?<span className="red-star">*</span></label>
+                        <div className="checkbox-input-wrapper">
+                            <input 
+                                className="modal-checkbox"
+                                type="checkbox"
+                                onClick={handleEnablePasswordInput}
+                            />
+                            <label className='checkbox-label'> Yes</label>
+                        </div>
                         <input
                             ref={passwordRef}
                             name="password"
@@ -122,7 +125,7 @@ export const Modal = ({ open, onClose }) => {
                             disabled={ loading ? true : false}
                             onClick={deleteAccountHandler}
                         >
-                        Delete it
+                        Delete it!
                         </button>
                         <button onClick={ () => {
                             onClose()

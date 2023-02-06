@@ -1,21 +1,119 @@
+/* input styles come from login&register css */
+
 .account-page-container {
     flex: 1;
     display: flex;
+    position: relative;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+.link {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    font-family: arial, sans-serif;
+    font-size: 1rem;
+    color: var(--primary);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .link:hover {
+    color: var(--fifth);
+  }
+
+  .submit-button {
+    margin-top: 1rem;
+    margin-left: 1rem;
+  }
+
+.page-title {
+    text-align: center;
+    margin: 40px 0 20px 0;
+}
+
 .settings-container {
+    max-width: 500px;
+    min-width: 265px;
     width: 50%;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
+    background-color: var(--third);
+    border-radius: 10px;
 }
 
 .setting-wrapper {
     display: flex;
     justify-content: space-between;
-    margin-top: 1rem;
+    margin: 1rem;
+}
+
+.change-btn {
+    background-color: var(--primary);
+    color: var(--fourth);
+    border-radius: 10px;
+    border: none;
+}
+
+.submit-button {
+    background-color: var(--primary);
+    color: var(--fourth);
+    font-size: 1.2rem;
+    border-radius: 10px;
+    border: none;
+}
+
+.change-btn:hover, .submit-button:hover {
+    background-color: var(--fifth);
+  }
+  
+
+.change-menu {
+    height: 0;
+    margin: 0 1rem;
+}
+
+.change-menu *{
+    pointer-events: none;
+    touch-action: none;
+    opacity: 0;
+}
+
+.change-menu.name.show {
+    animation: animateChangeMenuNameShow 0.5s ease-in-out forwards;
+}
+
+.change-menu.name.hide {
+    animation: animateChangeMenuNameHide 0.5s ease-in-out forwards;
+}
+
+.change-menu.password.show {
+    animation: animateChangeMenuPasswordShow 0.5s ease-in-out forwards;
+}
+
+.change-menu.password.hide {
+    animation: animateChangeMenuPasswordHide 0.5s ease-in-out forwards;
+}
+
+.change-menu.show * {
+    touch-action: auto;
+    pointer-events: auto;
+    animation: animateChangeMenuChildrenShow 0.5s 0.3s linear forwards;
+}
+
+.change-menu.hide * {
+
+    animation: animateChangeMenuChildrenHide 0.2s linear forwards;
+}
+
+.error-details {
+    margin-top: 10px;
 }
 
 .parameter-label{
@@ -29,3 +127,71 @@
 .setting-wrapper.setting-wrapper-toggle-type {
     justify-content: center;
 }
+
+  .delete-account-btn {
+    background-color: var(--error);
+    color: var(--fourth);
+    font-size: 1.2rem;
+    border-radius: 10px;
+    border: none;
+  }
+
+  @keyframes animateChangeMenuChildrenShow {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+  }
+
+  @keyframes animateChangeMenuChildrenHide {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+  }
+
+  @keyframes animateChangeMenuNameShow {
+    from {
+        height: 0;
+    }
+    to {
+        height: 90px;
+    }
+  }
+
+  @keyframes animateChangeMenuNameHide {
+    from {
+        height: 90px;
+    }
+    to {
+        height: 0;
+    }
+  }
+
+  @keyframes animateChangeMenuPasswordShow {
+    from {
+        height: 0;
+    }
+    to {
+        height: 210px;
+    }
+  }
+
+  @keyframes animateChangeMenuPasswordHide {
+    from {
+        height: 210px;
+    }
+    to {
+        height: 0;
+    }
+  }
+
+  @keyframes rotateChevron{
+    to {
+        transform: rotate(180deg);
+    }
+  }

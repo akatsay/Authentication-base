@@ -18,6 +18,10 @@ export const AccountPage = () => {
     const {loading, request, error, clearError} = useHttp()
     const [showChangeNameMenu, setShowChangeNameMenu] = useState(false)
     const [showChangePasswordMenu, setShowChangePasswordMenu] = useState(false)
+    
+    const [clickedNameChange, setClickedNameChange] = useState(false) //Flag to prevent animation when page loads
+    const [clickedPasswordChange, setClickedPasswordChange] = useState(false) //Flag to prevent animation when page loads
+
     const [changeNameErrorMessageDetails, setChangeNameErrorMessageDetails] = useState({})
     const [changePasswordErrorMessageDetails, setChangePasswordErrorMessageDetails] = useState({})
     const [openModal, setOpenModal] = useState(false);
@@ -35,13 +39,16 @@ export const AccountPage = () => {
 
     const navigate = useNavigate()
 
+    const handleClickedNameChange = () => setClickedNameChange(true)
+    const handleClickedPasswordChange = () => setClickedPasswordChange(true)
+
     const NameChangeHandler = (event) => {
         setNameForm({...nameForm, [event.target.name]: event.target.value})
     }
 
     const nameChangeSubmitHandler = async () => {
         try {
-            const data = await request("/api/account/name", "post", {...nameForm})
+            const data = await request("/api/account/name", "put", {...nameForm})
             auth.userName = nameForm.name
             setChangeNameErrorMessageDetails({})
             nameRef.current.style.borderBottomColor = ""
@@ -93,25 +100,6 @@ export const AccountPage = () => {
         }
     }
 
-    const deleteAccountHandler = async () => {
-        try {
-            const data = await request("/api/account/delete", "delete", {userId : auth.userId})
-            toast.success(data.message, {
-                style: {backgroundColor: "#555", color: "white"},
-                position: "bottom-right",
-                autoClose: 2000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-                });
-        } catch (e) {
-            
-        }
-    }
 
     useEffect(() => {
         if (error) {
@@ -151,7 +139,7 @@ export const AccountPage = () => {
     return (
         <>
             <div className="account-page-container">
-                <button onClick={() => {navigate("/home")}}>{"<-"}Back to Home Page</button>
+                <button className="link" onClick={() => {navigate("/home")}}>{"<-"}Back to Home Page</button>
                 <h1 className="page-title">Account settings</h1>
                 <div className="settings-container">
                     <div className="setting-wrapper">
@@ -165,20 +153,23 @@ export const AccountPage = () => {
                         <button 
                             onClick={() => 
                                 {
+                                    handleClickedNameChange();
                                     setShowChangeNameMenu(!showChangeNameMenu);
                                     showChangeNameMenu ? setShowChangePasswordMenu(false) : setShowChangePasswordMenu(false);
                                     !showChangeNameMenu ? setChangeNameErrorMessageDetails({}) : setChangeNameErrorMessageDetails({});
-                                    !showChangeNameMenu ?  setNameForm({...nameForm, name: ""}) : setNameForm({...nameForm, name: ""})
+                                    nameRef.current.style.borderBottomColor = "";
+                                    nameRef.current.value = "";
+                                    !showChangeNameMenu ?  setNameForm({...nameForm, name: ""}) : setNameForm({...nameForm, name: ""});
                                 }
                             }  
-                            className="change-btn"
+                            className="change-btn grow"
                         >
-                            {!showChangeNameMenu ? "Change" : "Cancel"}
+                            {!showChangeNameMenu ? "Change" : "Cancel"} <i className="fa fa-chevron-down rc-accordion-icon"></i>
                         </button>
                     </div>
-                    {showChangeNameMenu
-                        ?
-                        <div className="change-menu">
+                    {/* {showChangeNameMenu
+                        ? */}
+                        <div className={`change-menu name ${clickedNameChange ? (showChangeNameMenu ? "show" : "hide") : ""}`}>
                             <input 
                                 ref={nameRef}
                                 className="input input-name"
@@ -190,6 +181,7 @@ export const AccountPage = () => {
                                 placeholder={auth.userName}
                             />
                             <button 
+                                className="submit-button grow"
                                 onClick={nameChangeSubmitHandler}
                                 disabled={loading ? true : false}
                             >
@@ -206,27 +198,33 @@ export const AccountPage = () => {
                                 
                             }
                         </div>
-                        :
+                        {/* :
                         null
-                    }
+                    } */}
                     <div className="setting-wrapper setting-wrapper-toggle-type">
                         <button 
                             onClick={() => 
                                 {
+                                    handleClickedPasswordChange();
                                     setShowChangePasswordMenu(!showChangePasswordMenu);
                                     showChangePasswordMenu ? setShowChangeNameMenu(false) : setShowChangeNameMenu(false);
                                     !showChangePasswordMenu ? setChangePasswordErrorMessageDetails({}) : setChangePasswordErrorMessageDetails({});
+                                    oldPasswordRef.current.style.borderBottomColor = "";
+                                    newPasswordRef.current.style.borderBottomColor = "";
+                                    oldPasswordRef.current.value = "";
+                                    newPasswordRef.current.value = "";
                                     !showChangePasswordMenu ?  setPasswordForm({...passwordForm, oldPassword: "", newPassword: ""}) : setPasswordForm({...passwordForm, oldPassword: "", newPassword: ""})
                                 }
                             } 
-                            className="change-btn"
+                            className="change-btn grow"
                         >
-                            {!showChangePasswordMenu ? "Change Password" : "Cancel"}
+                            {!showChangePasswordMenu ? "Change Password" : "Cancel"} <i className="fa fa-chevron-down rc-accordion-icon"></i>
                         </button>
                     </div>
-                    {showChangePasswordMenu
-                        ?
-                        <div className="change-menu">
+                    {/* {showChangePasswordMenu
+                        ? */}
+                        <div className={`change-menu password ${clickedPasswordChange ? (showChangePasswordMenu ? "show" : "hide") : ""}`}>
+                            <label className="input-label" htmlFor="oldPassword">Old password</label>
                             <input 
                                 ref={oldPasswordRef}
                                 className="input input-old-password"
@@ -235,8 +233,9 @@ export const AccountPage = () => {
                                 type="password"
                                 autoComplete="off"
                                 onChange={passwordChangeHandler}
-                                placeholder="Input your old password"
+                                placeholder="Input old password"
                             />
+                            <label className="input-label" htmlFor="newPassword">New password</label>
                             <input 
                                 ref={newPasswordRef}
                                 className="input input-new-password"
@@ -245,9 +244,10 @@ export const AccountPage = () => {
                                 type="password"
                                 autoComplete="off"
                                 onChange={passwordChangeHandler}
-                                placeholder="Input your new password"
+                                placeholder="Input new password"
                             />
                             <button 
+                                className="submit-button grow"
                                 onClick={passwordChangeSubmitHandler}
                                 disabled={loading ? true : false}
                             >
@@ -262,14 +262,13 @@ export const AccountPage = () => {
                                     </div>
                             }
                         </div>
-                        :
+                        {/* :
                         null
-                    }
+                    } */}
                     <div className="setting-wrapper setting-wrapper-toggle-type">
                         <button 
-                            // onClick={deleteAccountHandler}
                             onClick={() => setOpenModal(true)}   
-                            className="delete-account-btn"
+                            className="delete-account-btn grow"
                         >
                             Delete My account
                         </button>
