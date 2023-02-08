@@ -3,6 +3,7 @@ require("dotenv").config()
 const { check, validationResult } = require("express-validator")
 const bcrypt = require("bcryptjs")
 const User = require("../models/User")
+const auth = require("../middlewares/auth.middleware")
 const router = Router()
 
 
@@ -12,6 +13,7 @@ const router = Router()
 
 router.put(
     "/name",
+    auth,
     [
         check("name")
             .not().isEmpty().withMessage("Input new name")
@@ -65,6 +67,7 @@ router.put(
 
 router.post(
     '/password',
+    auth,
     [
         check("oldPassword")
             .not().isEmpty().withMessage("Input your old Password"),
@@ -134,6 +137,7 @@ router.post(
 
 router.delete(
     "/delete",
+    auth,
     [
         check("password")
             .not().isEmpty().withMessage("Input your old Password")

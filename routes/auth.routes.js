@@ -109,7 +109,7 @@ router.post(
         const token = jwt.sign(
             {userId: user.id, name: user.firstName, email: user.email},
             process.env.JWT_SECRET,
-            {expiresIn: "1h"}
+            {expiresIn: "15m"}
         )
 
         res.json({ token, userId: user.id, name: user.firstName, email: user.email, message: `logged in as ${email}` })

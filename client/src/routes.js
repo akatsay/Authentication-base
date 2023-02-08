@@ -6,6 +6,7 @@ import {HomePage} from "./pages/HomePage"
 import { AccountPage } from './pages/AccountPage'
 
 export const useRoutes = isAuthenticated => {
+
     if (isAuthenticated) {
         return (
             <Routes>

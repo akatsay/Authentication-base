@@ -1,19 +1,24 @@
-import React from 'react'
 import {BrowserRouter as Router} from "react-router-dom"
-import { AuthContext } from './context/AuthContext';
+import { AuthContext } from './context/AuthContext'
 import { ToastContainer} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
-import { useAuth } from './hooks/auth.hook';
-import { useRoutes } from "./routes";
+import { useAuth } from './hooks/auth.hook'
+import { useRoutes } from "./routes"
 
 import { Footer } from "./partials/footer"
 import { Header } from "./partials/header"
+import { Loader } from "./partials/loader"
+
 
 function App() {
 
-  const {login, logout, token, userId, userName, userEmail} = useAuth()
+  const {login, logout, token, userId, userName, userEmail, ready} = useAuth()
   const isAuthenticated = !!token
   const routes = useRoutes(isAuthenticated)
+
+  if (!ready) {
+    return <><Loader/></>
+  }
 
   return (
     <AuthContext.Provider value={{

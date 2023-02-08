@@ -36,7 +36,9 @@ export const Modal = ({ open, onClose }) => {
 
     const deleteAccountHandler = async () => {
         try {
-            const data = await request("/api/account/delete", "delete", {...deletionForm})
+            const data = await request("/api/account/delete", "delete", {...deletionForm}, {
+                Authorization: `Bearer ${auth.token}`
+              })
             passwordRef.current.style.borderBottomColor = ""
             auth.logout()
             toast.success(data.message, {
@@ -58,18 +60,38 @@ export const Modal = ({ open, onClose }) => {
 
     useEffect(() => {
         if (error) {
-            toast.error(error.message, {
-                style: {backgroundColor: "#555", color: "white"},
-                position: "bottom-right",
-                autoClose: 2000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-                });
+            if (error.message === "No auth") {
+                auth.logout()
+                toast.error("Session expired", {
+                    style: {backgroundColor: "#555", color: "white"},
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Slide,
+                    });
+            
+            } else {
+
+                toast.error(error.message, {
+                    style: {backgroundColor: "#555", color: "white"},
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Slide,
+                    });
+            }
+
+                
             if (error.cause !== undefined) {
                 if (error.cause.origin === "password") {
                     passwordRef.current.focus()
@@ -78,7 +100,7 @@ export const Modal = ({ open, onClose }) => {
             clearError()
             }
         }
-    }, [error, clearError])
+    }, [error, clearError, auth])
 
     if (!open) return null
 

@@ -41,7 +41,9 @@ export const AccountPage = () => {
 
     const nameChangeSubmitHandler = async () => {
         try {
-            const data = await request("/api/account/name", "put", {...nameForm})
+            const data = await request("/api/account/name", "put", {...nameForm}, {
+                Authorization: `Bearer ${auth.token}`
+              })
             auth.userName = nameForm.name
             setChangeNameErrorMessageDetails({})
             nameRef.current.style.borderBottomColor = ""
@@ -70,7 +72,9 @@ export const AccountPage = () => {
 
     const passwordChangeSubmitHandler = async () => {
         try {
-            const data = await request("/api/account/password", "post", {...passwordForm})
+            const data = await request("/api/account/password", "post", {...passwordForm}, {
+                Authorization: `Bearer ${auth.token}`
+              })
             setChangePasswordErrorMessageDetails({})
             oldPasswordRef.current.style.borderBottomColor = ""
             newPasswordRef.current.style.borderBottomColor = ""
@@ -96,18 +100,37 @@ export const AccountPage = () => {
 
     useEffect(() => {
         if (error) {
-            toast.error(error.message, {
-                style: {backgroundColor: "#555", color: "white"},
-                position: "bottom-right",
-                autoClose: 2000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-                });
+            if (error.message === "No auth") {
+                auth.logout()
+                toast.error("Session expired", {
+                    style: {backgroundColor: "#555", color: "white"},
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Slide,
+                    });
+            
+            } else {
+
+                toast.error(error.message, {
+                    style: {backgroundColor: "#555", color: "white"},
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Slide,
+                    });
+            }
+                
             if (error.cause !== undefined) {
                 if (error.cause.origin === "name") {
                     setChangeNameErrorMessageDetails(error.cause)
@@ -127,7 +150,7 @@ export const AccountPage = () => {
             }
             clearError()
         }
-    }, [error, clearError])
+    }, [error, clearError, auth])
 
     return (
         <>
@@ -232,7 +255,7 @@ export const AccountPage = () => {
                             />
                             <button 
                                 className="submit-button grow"
-                                onClick={passwordChangeSubmitHandler}
+                                onClick={() => {console.log(loading); passwordChangeSubmitHandler();}}
                                 disabled={loading ? true : false}
                             >
                             Change it!
