@@ -11,12 +11,9 @@ export const Header = () => {
   const navigate = useNavigate()
   const dropdownRef = useRef(null)
   
-  const [clicked, setClicked] = useState(false) //Flag to prevent animation when page
-  const [open, setOpen] = useDetectOutsideClick(dropdownRef, false);
+  const [open, setOpen] = useDetectOutsideClick(dropdownRef, false)
 
   const auth = useContext(AuthContext)
-
-  const handleClicked = () => setClicked(true)
 
   const handleOpen = () => setOpen(!open)
 
@@ -42,7 +39,7 @@ export const Header = () => {
       <nav className="navbar">
         <div className="brand-title">Authentication</div>
             <div ref={dropdownRef} className={`dropdown ${auth.isAuthenticated ? "" : "hide"}`}>
-              <button className="drop-trigger big" onClick={() => {handleOpen(); handleClicked();}}>
+              <button className="drop-trigger big" onClick={handleOpen}>
                 <p>Logged in as:</p>
                 <i>{auth.userEmail}</i>
               </button>
