@@ -94,6 +94,7 @@ export const LoginPage = () => {
                                 id="email"
                                 name="email"
                                 type="email"
+                                value={form.email}
                                 onChange={changeHandler}
                             />
                         </div>
@@ -106,6 +107,7 @@ export const LoginPage = () => {
                                 id="password"
                                 name="password"
                                 type="password"
+                                value={form.password}
                                 onChange={changeHandler}
                             />
                         </div>

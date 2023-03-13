@@ -5,9 +5,9 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useAuth } from './hooks/auth.hook'
 import { useRoutes } from "./routes"
 
-import { Footer } from "./partials/footer"
-import { Header } from "./partials/header"
-import { Loader } from "./partials/loader"
+import { Footer } from "./components/footer"
+import { Header } from "./components/header"
+import { Loader } from "./components/loader"
 
 
 function App() {

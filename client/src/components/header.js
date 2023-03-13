@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react"
+import React, { useContext, useRef } from "react"
 import { toast, Slide } from "react-toastify"
 import { AuthContext } from "../context/AuthContext"
 import { useDetectOutsideClick } from "../hooks/useDetectOutsideClick";

@@ -136,7 +136,7 @@ router.post(
 // /api/account/delete
 
 router.delete(
-    "/delete",
+    "/",
     auth,
     [
         check("password")

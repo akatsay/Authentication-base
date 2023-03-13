@@ -62,10 +62,6 @@ export const RegisterPage = () => {
 
     const changeHandler = (event) => {
         setForm({...form, [event.target.name]: event.target.value})
-        // const refName = event.target.name + "Ref"
-        // console.log(firstNameRef)
-        // console.log(refName.current)
-        // refName.current.style.borderBottomColor = "#435160"
     }
 
     const registerHandler = async (e) => {
@@ -106,6 +102,7 @@ export const RegisterPage = () => {
                                 name="firstName"
                                 type="text"
                                 autoComplete="off"
+                                value={form.firstName}
                                 onChange={changeHandler}
                             />
                         </div>
@@ -118,6 +115,7 @@ export const RegisterPage = () => {
                                 id="email"
                                 name="email"
                                 type="email"
+                                value={form.email}
                                 onChange={changeHandler}
                             />
                         </div>
@@ -130,6 +128,7 @@ export const RegisterPage = () => {
                                 id="password"
                                 name="password"
                                 type="password"
+                                value={form.password}
                                 onChange={changeHandler}
                             />
                         </div>

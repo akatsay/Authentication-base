@@ -11,7 +11,7 @@ export const Modal = ({ open, onClose }) => {
 
     const passwordRef = useRef(null)
     
-    const [disabledPasswordInput, setDisabledPasswordInput] = useState(true)
+    const [disabledDelete, setDisabledDelete] = useState(true)
     
     const [deletionForm, setDeletionForm] = useState({
         password: "",
@@ -20,23 +20,17 @@ export const Modal = ({ open, onClose }) => {
 
     const {loading, request, error, clearError} = useHttp()
 
-    const handleEnablePasswordInput = () => {
-        setDisabledPasswordInput(!disabledPasswordInput)
+    const handleEnableDelete = () => {
+        setDisabledDelete(!disabledDelete)
     }
 
     const passwordHandler = (event) => {
         setDeletionForm({...deletionForm, [event.target.name]: event.target.value})
     }
 
-    const clearInputs = () => {
-        setDisabledPasswordInput(true)
-        passwordRef.current.style.borderBottomColor = ""
-        setDeletionForm({...deletionForm, password: ""})
-    }
-
     const deleteAccountHandler = async () => {
         try {
-            const data = await request("/api/account/delete", "delete", {...deletionForm}, {
+            const data = await request("/api/account", "delete", {...deletionForm}, {
                 Authorization: `Bearer ${auth.token}`
               })
             passwordRef.current.style.borderBottomColor = ""
@@ -92,7 +86,7 @@ export const Modal = ({ open, onClose }) => {
             }
 
                 
-            if (error.cause !== undefined) {
+            if (error.cause) {
                 if (error.cause.origin === "password") {
                     passwordRef.current.focus()
                     passwordRef.current.style.borderBottomColor = "#FF7276"
@@ -108,7 +102,6 @@ export const Modal = ({ open, onClose }) => {
         <div 
             onClick={ () => {
                 onClose()
-                clearInputs()
                 }
             } 
             className='overlay'
@@ -127,7 +120,7 @@ export const Modal = ({ open, onClose }) => {
                             <input 
                                 className="modal-checkbox"
                                 type="checkbox"
-                                onClick={handleEnablePasswordInput}
+                                onClick={handleEnableDelete}
                             />
                             <label className='checkbox-label'> Yes</label>
                         </div>
@@ -138,20 +131,20 @@ export const Modal = ({ open, onClose }) => {
                             className='input'
                             type="password"
                             placeholder="input your password"
-                            disabled={disabledPasswordInput}
+                            disabled={disabledDelete}
+                            value={deletionForm.password}
                             onChange={passwordHandler}
                         />
                     </div>
                     <div className="modal-buttons-container">
                         <button
-                            disabled={ loading ? true : false}
+                            disabled={ loading || disabledDelete ? true : false}
                             onClick={deleteAccountHandler}
                         >
                         Delete it!
                         </button>
                         <button onClick={ () => {
                             onClose()
-                            clearInputs()
                             }
                         }
                         >
