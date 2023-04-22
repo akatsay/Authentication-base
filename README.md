@@ -2,11 +2,13 @@
 ## Base for website authentication mechanism + account settings 
 
 #### To deploy and test on local machine do the following:
-  1) In the command line after changing directory to the folder of your preference run: git clone https://github.com/akatsay/Authentication-base.git
+  1) In the command line after changing directory to the folder of your preference run: "git clone https://github.com/akatsay/Authentication-base.git"
   2) Create mongodb data cluster
   3) In the root folder create file and name it .env and fill it according to the template below
-  4) Run script: "npm run dev" in the command line
-  5) Enjoy! :)
+  4) Run script: "npm i"
+  5) Run script: "npm run client:install" 
+  6) Run script: "npm run dev" in the command line
+  7) Enjoy! :)
   
 #### env file template:
     ```
